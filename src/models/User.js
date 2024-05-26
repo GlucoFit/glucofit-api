@@ -7,13 +7,24 @@ const User = sequelize.define('User', {
     primaryKey: true,
     autoIncrement: true,
   },
-  firstName: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
-  lastName: {
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: true, // Allow null for users authenticated with Google
+  },
+  googleId: {
     type: DataTypes.STRING,
     allowNull: true,
+    unique: true,
   },
 }, {
   tableName: 'users',

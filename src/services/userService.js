@@ -1,46 +1,36 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-// Service to create a new user
-const createUser = async (userData) => {
-  const newUser = await User.create(userData);
+exports.createUser = async (userData) => {
+  const { username, email, password } = userData;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const newUser = await User.create({ username, email, password: hashedPassword });
   return newUser;
 };
 
-// Service to get all users
-const getAllUsers = async () => {
+exports.getAllUsers = async () => {
   const users = await User.findAll();
   return users;
 };
 
-// Service to get user by ID
-const getUserById = async (id) => {
-  const user = await User.findByPk(id);
+exports.getUserById = async (userId) => {
+  const user = await User.findByPk(userId);
   return user;
 };
 
-// Service to update user by ID
-const updateUser = async (id, updateData) => {
-  const user = await User.findByPk(id);
-  if (!user) {
-    throw new Error('User not found');
+exports.updateUser = async (userId, updateData) => {
+  const [updated] = await User.update(updateData, { where: { id: userId } });
+  if (updated) {
+    const updatedUser = await User.findByPk(userId);
+    return updatedUser;
   }
-  await user.update(updateData);
-  return user;
+  throw new Error('User not found');
 };
 
-// Service to delete user by ID
-const deleteUser = async (id) => {
-  const user = await User.findByPk(id);
-  if (!user) {
-    throw new Error('User not found');
+exports.deleteUser = async (userId) => {
+  const deleted = await User.destroy({ where: { id: userId } });
+  if (deleted) {
+    return 'User deleted';
   }
-  await user.destroy();
-};
-
-module.exports = {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
+  throw new Error('User not found');
 };
