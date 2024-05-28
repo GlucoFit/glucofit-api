@@ -1,0 +1,6 @@
+const path = require("path");
+const appDir = path.join(__dirname, "app");
+
+module.exports = {
+    "models-path": path.join(appDir, "models")
+}
