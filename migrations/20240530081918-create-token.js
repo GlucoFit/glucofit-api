@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users', // name of the target table
+          model: 'users',
           key: 'id'      // key in the target table that the foreign key refers to
         },
         onUpdate: 'CASCADE',
