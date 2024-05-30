@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config();
 
 module.exports = {
   development: {
@@ -16,10 +17,10 @@ module.exports = {
     dialect: 'mysql'
   },
   production: {
-    username: 'root',
-    password: null,
-    database: 'glucofit_dev',
-    host: '127.0.0.1',
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_CONNECTION,
     dialect: 'mysql'
   }
 }
