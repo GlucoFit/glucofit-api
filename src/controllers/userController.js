@@ -1,15 +1,15 @@
 const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');
 
-exports.createUser = async (req, res) => {
-  try {
-    const userData = req.body;
-    const newUser = await userService.createUser(userData);
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// exports.createUser = async (req, res) => {
+//   try {
+//     const userData = req.body;
+//     const newUser = await userService.createUser(userData);
+//     res.status(201).json(newUser);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 exports.getUserMe = async (req, res) => {
   try {
@@ -60,9 +60,9 @@ exports.updatePassword = async (req, res) => {
 
 exports.deleteUserMe = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.id; // Assuming user id is available in req.user
     await userService.deleteUserMe(userId);
-    res.status(204).send();
+    res.status(200).json({ message: 'User account deleted successfully.' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -32,7 +32,7 @@ const callbackURL =
     ? 'https://glucofit-api-l76ziq6bya-et.a.run.app/api/auth/google/callback'
     : process.env.NODE_ENV === 'test'
     ? 'http://195.35.6.208:8080/api/auth/google/callback'
-    : 'http://localhost:3000/api/auth/google/callback';
+    : 'http://localhost:8080/api/auth/google/callback';
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,

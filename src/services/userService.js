@@ -1,8 +1,8 @@
 const User = require('../models').User;
-
-const createUser = async (userData) => {
-  return User.create(userData);
-};
+const authService = require('./authService');
+// const createUser = async (userData) => {
+//   return User.create(userData);
+// };
 
 const getUserMe = async (userId) => {
   return User.findByPk(userId);
@@ -35,6 +35,7 @@ const updatePassword = async (userId, newPassword) => {
 const deleteUserMe = async (userId) => {
   const user = await User.findByPk(userId);
   if (!user) throw new Error('User not found');
+  await authService.invalidateAllTokens(userId);
   return user.destroy();
 };
 
@@ -59,8 +60,8 @@ const deleteUserMe = async (userId) => {
 // };
 
 module.exports = {
-  createUser,
-  createUser,
+  // createUser,
+  // createUser,
   getUserMe,
   updateUsername,
   updateEmail,
