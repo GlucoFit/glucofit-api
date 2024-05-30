@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 8080;
 // Middleware to parse JSON
 app.use(express.json());
 
+// Middleware to parse x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 // Initialize Passport without session support
 app.use(passport.initialize());
 
