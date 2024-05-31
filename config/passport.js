@@ -29,7 +29,7 @@ passport.use(new LocalStrategy({
 
 const callbackURL =
   process.env.NODE_ENV === 'production'
-    ? 'https://glucofit-api-l76ziq6bya-et.a.run.app/api/auth/google/callback'
+    ? 'https://glucofit-api-public-l76ziq6bya-et.a.run.app/api/auth/google/callback'
     : process.env.NODE_ENV === 'test'
     ? 'http://195.35.6.208:8080/api/auth/google/callback'
     : 'http://localhost:8080/api/auth/google/callback';

@@ -3,8 +3,6 @@ const { sequelize } = require('./models/index');
 const userRoutes = require('./routes/userRoute');
 const authRoutes = require('./routes/authRoute');
 const passport = require('passport');
-const { Connector } = require("@google-cloud/cloud-sql-connector"); // Import the Cloud SQL Connector
-const { production } = require('../config/config');
 require('../config/passport'); // Ensure your Passport strategies are configured
 require('dotenv').config();
 
@@ -23,21 +21,6 @@ app.use(passport.initialize());
 // Use routes
 app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
-
-// Create a Cloud SQL connector instance
-const connector = new Connector();
-
-// Before connecting to the database, fetch Cloud SQL connection options dynamically
-if (process.env.NODE_ENV === production){
-  sequelize.beforeConnect(async (config) => {
-    const clientOpts = await connector.getOptions({
-      instanceConnectionName: process.env.DB_CONNECTION,
-      ipType: "PUBLIC",
-    });
-    config = { ...config, ...clientOpts };
-  });
-  
-}
 
 // Test database connection and sync models
 (async () => {
