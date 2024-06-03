@@ -2,12 +2,18 @@ const express = require('express');
 const { sequelize } = require('./models/index');
 const userRoutes = require('./routes/userRoute');
 const authRoutes = require('./routes/authRoute');
+const predictRoutes = require('./routes/predictRoute');
+const scanRoutes = require('./routes/scanRoute');
 const passport = require('passport');
+const cors = require('cors');
 require('../config/passport'); // Ensure your Passport strategies are configured
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+// Enable CORS
+app.use(cors()); // This will enable CORS for all origins by default
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -21,6 +27,8 @@ app.use(passport.initialize());
 // Use routes
 app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/predict', predictRoutes);
+app.use('/api', scanRoutes);
 
 // Test database connection and sync models
 (async () => {

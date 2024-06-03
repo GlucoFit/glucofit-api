@@ -12,11 +12,11 @@ const generateAuthToken = async (user) => {
   return token;
 };
 
-const registerUser = async (userName, email, password) => {
+const registerUser = async (userName, email, password, assessmentStatus) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   //Test Log
   // console.log("service:" + userName, email, password + " HASHED PASSWORD " + hashedPassword);
-  const newUser = await User.create({ userName, email, password: hashedPassword });
+  const newUser = await User.create({ userName, email, password: hashedPassword, assessmentStatus });
   //Test Log
   // console.log("service, POST CREATE GENERATION:" + userName, email, password + " HASHED PASSWORD " + hashedPassword);
   const token = await generateAuthToken(newUser);

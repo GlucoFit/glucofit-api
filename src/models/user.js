@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Token, { foreignKey: 'userId', as: 'tokens'})
+      User.hasMany(models.Scan, { foreignKey:'userId', as: 'scans' }) 
     }
   }
   User.init({
@@ -36,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
-    }
+    },
   }, {
     sequelize,
     modelName: 'User',

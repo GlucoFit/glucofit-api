@@ -5,10 +5,10 @@ const authService = require('../services/authService');
 
 exports.register = async (req, res) => {
   try {
-    const { userName, email, password } = req.body;
+    const { userName, email, password, assessmentStatus } = req.body;
     //Test Log
     console.log("controller:" + userName, email, password);
-    const { user, token } = await authService.registerUser(userName, email, password);
+    const { user, token } = await authService.registerUser(userName, email, password, assessmentStatus);
     res.status(201).json({ user, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -32,7 +32,7 @@ exports.googleAuth = passport.authenticate('google', { scope: ['profile', 'email
 exports.googleAuthCallback = (req, res, next) => {
   passport.authenticate('google', { session: false }, async (err, user, info) => {
     if (err) return next(err);
-    if (!user) return res.status(401).json({ message: 'Authentication failed' });
+    if (!user) return res.status(401).json({ message: 'Authentication failed.' });
 
     const token = await authService.generateAuthToken(user);
     res.json({ token });

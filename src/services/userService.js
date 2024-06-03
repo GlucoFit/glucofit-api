@@ -1,4 +1,4 @@
-const User = require('../models').User;
+const {User, Assessment} = require('../models');
 const authService = require('./authService');
 // const createUser = async (userData) => {
 //   return User.create(userData);

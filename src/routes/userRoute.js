@@ -9,8 +9,9 @@ const authenticateJWT = require('../middleware/authenticateJWT');
 router.get('/users/me', authenticateJWT, userController.getUserMe);
 router.put('/users/me/username', authenticateJWT, userController.updateUsername);
 router.put('/users/me/email', authenticateJWT, userController.updateEmail);
-router.put('/users/me/password', authenticateJWT, userController.updatePassword);
+router.put('/users/me/password', authenticateJWT, userController.updatePassword);  
 router.delete('/users/me', authenticateJWT, userController.deleteUserMe);
+
 // router.get('/users/:id', authenticateJWT, userController.getUserById);
 // router.put('/users/:id', authenticateJWT, userController.updateUser);
 // router.delete('/users/:id', authenticateJWT, userController.deleteUser);
