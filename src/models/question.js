@@ -1,28 +1,39 @@
+'use strict';
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    const Question = sequelize.define('Question', {
-      question_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+  class Question extends Model {
+    static associate(models) {
+      // define association here
+      Question.belongsTo(models.Assessment, { foreignKey: 'assessmentId', as: 'assessment' });
+    }
+  }
+  Question.init({
+    questionId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    questionAnswer: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    assessmentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'assessments', // ensure correct model name
+        key: 'id',
       },
-      question_answer: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      assessment_assessment_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
-  
-    Question.associate = function(models) {
-      // Association ke Assessment
-      Question.belongsTo(models.Assessment, {
-        foreignKey: 'assessment_assessment_id',
-        as: 'assessment'
-      });
-    };
-  
-    return Question;
-  };
-  
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    },
+  }, {
+    sequelize,
+    modelName: 'Question',
+    tableName: 'questions',
+    timestamps: true,
+  });
+
+  return Question;
+};

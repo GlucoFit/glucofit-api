@@ -4,6 +4,7 @@ const userRoutes = require('./routes/userRoute');
 const authRoutes = require('./routes/authRoute');
 const predictRoutes = require('./routes/predictRoute');
 const scanRoutes = require('./routes/scanRoute');
+const assessmentRoutes = require('./routes/assessmentRoute');
 const passport = require('passport');
 const cors = require('cors');
 require('../config/passport'); // Ensure your Passport strategies are configured
@@ -29,6 +30,7 @@ app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/predict', predictRoutes);
 app.use('/api', scanRoutes);
+app.use('/api', assessmentRoutes);
 
 // Test database connection and sync models
 (async () => {
