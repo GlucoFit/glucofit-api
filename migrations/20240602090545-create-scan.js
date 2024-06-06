@@ -1,5 +1,7 @@
 'use strict';
 
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -19,7 +21,7 @@ module.exports = {
         allowNull: false
       },
       objectSugar: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       userId: {
@@ -27,6 +29,16 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      datasetId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'scan_datasets',
           key: 'id'
         },
         onUpdate: 'CASCADE',

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Scan.belongsTo(models.User, { foreignKey: 'userId', as: 'user'})
+      Scan.belongsTo(models.ScanDataset, { foreignKey: 'datasetId', as: 'scan_dataset'})
     }
   }
   Scan.init({
@@ -37,6 +38,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {
         model: 'users',
+        key: 'id'
+      }
+    },
+    datasetId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'scan_datasets',
         key: 'id'
       }
     }

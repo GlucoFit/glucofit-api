@@ -1,5 +1,7 @@
-const {User, Scan} = require('../models');
+const {User, Scan, ScanDataset} = require('../models');
 const bucket = require('../../config/storage');
+const scan_dataset = require('../models/scan_dataset');
+const { data } = require('@tensorflow/tfjs');
 
 const uploadImage = (file, folder = 'user-image', userId) => {
     return new Promise((resolve, reject) => {
@@ -33,15 +35,24 @@ const saveImage = async (objectImageUrl, objectName, objectSugar, userId) => {
 const getHistoryMe = async (userId) => {
     const scans = await Scan.findAll({
         where: {userId},
-        attributes: ['id', 'objectImageUrl', 'objectName', 'objectSugar', 'createdAt'],
+        attributes: ['id', 'objectImageUrl', 'objectName', 'objectSugar', 'datasetId', 'createdAt'],
         order: [['createdAt', 'DESC']]
     });
 
     return scans;
 }
 
+const getSugarByDatasetId = async (datasetId) => {
+    const dataset = await ScanDataset.findByPk(datasetId);
+    if (!dataset) {
+        throw new Error ('Food dataset not fouund');
+    }
+    return dataset;
+}
+
 module.exports = {
     uploadImage,
     saveImage,
-    getHistoryMe
+    getHistoryMe,
+    getSugarByDatasetId
 };

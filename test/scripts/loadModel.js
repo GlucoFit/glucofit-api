@@ -10,7 +10,7 @@ async function predictImage() {
   try {
     // Load the model
     console.log('Loading model...');
-    const model = await tf.loadLayersModel(process.env.MODEL_IMAGE_RECOGNITION3);
+    const model = await tf.loadLayersModel(process.env.MODEL_CBF_HISTORY);
     console.log('Model loaded successfully.');
 
     // Read the image file
