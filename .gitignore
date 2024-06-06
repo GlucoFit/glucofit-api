@@ -3,3 +3,4 @@ config/serviceAccountKey.json
 certs/
 config/image_recognition
 node_modules
+config/cbf*

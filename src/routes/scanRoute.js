@@ -5,8 +5,9 @@ const authenticateJWT = require('../middleware/authenticateJWT');
 const upload = require('../middleware/uploadMiddleware');
 
 /**
- * Routes for Image Recognition needs on MD
+ * Routes for storing Image and Get Image Sugar Data
  */
+router.get('/scan/food/:id', authenticateJWT, scanController.getSugarByDatasetId);
 router.post('/scan/upload', authenticateJWT, upload.single('image'), scanController.uploadImageAndSave);
 router.get('/scan/history', authenticateJWT, scanController.getHistoryMe);
 
