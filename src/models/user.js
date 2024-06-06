@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Token, { foreignKey: 'userId', as: 'tokens'})
-      User.hasMany(models.Scan, { foreignKey:'userId', as: 'scans' }) 
+      User.hasMany(models.Scan, { foreignKey:'userId', as: 'scans' })
+      User.hasMany(models.Assessment, { foreignKey: 'userId', as: 'assessments' }); 
     }
   }
   User.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
       autoIncrement: true,
     },

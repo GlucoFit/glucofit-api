@@ -1,35 +1,11 @@
-/**
- * 
- */
+const express = require('express');
+const assessmentController = require('../controllers/assessmentController');
+const authenticate = require('../middleware/assessmentMiddleware');
 
+const router = express.Router();
 
-/**
- * createRoute
- * 
- * post (data yang kaya di postman) /assessment/create
- * -> assessmentController : (req,res) => req.body.question1 req.body.question2 req.body.question3 / req.user
- * -> scanService.createAssessment(question1, question2, dst sampe question13, userId)
- * 
- * Table Asssessment:
- * id {
- * }
- * 
- * result
- * 
- * userId
- * 
- * 
- * Question Assessment:
- * 
- * id {
- * 
- * }
- * 
- * answer {
- * 
- * }
- * 
- * assessmentId {
- * 
- * }
- */
+router.post('/assessments', authenticate, assessmentController.createAssessment);
+router.get('/assessments/status', authenticate, assessmentController.getAssessmentStatus);
+router.get('/assessments/result', authenticate, assessmentController.getAssessmentResult);
+
+module.exports = router;

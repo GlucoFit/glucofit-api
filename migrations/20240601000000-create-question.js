@@ -1,23 +1,21 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('assessments', {
-      id: {
-        allowNull: false,
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('questions', {
+      questionId: {
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
-      result: {
-        type: Sequelize.INTEGER,
+      questionAnswer: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      userId: {
+      assessmentId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false, // Ensure the foreign key is not null
         references: {
-          model: 'users', // Pastikan tabel 'users' sudah ada
+          model: 'assessments', // Ensure correct table name
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -35,7 +33,8 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('assessments');
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('questions');
   }
 };
