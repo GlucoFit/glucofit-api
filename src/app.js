@@ -2,7 +2,7 @@ const express = require('express');
 const { sequelize } = require('./models/index');
 const userRoutes = require('./routes/userRoute');
 const authRoutes = require('./routes/authRoute');
-const predictRoutes = require('./routes/predictRoute');
+//const predictRoutes = require('./routes/predictRoute');
 const scanRoutes = require('./routes/scanRoute');
 const assessmentRoutes = require('./routes/assessmentRoute');
 const passport = require('passport');
@@ -28,7 +28,7 @@ app.use(passport.initialize());
 // Use routes
 app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/predict', predictRoutes);
+//app.use('/api/predict', predictRoutes);
 app.use('/api', scanRoutes);
 app.use('/api', assessmentRoutes);
 

@@ -1,8 +1,8 @@
 const express = require('express');
 const assessmentController = require('../controllers/assessmentController');
-const router = express.Router();
-
 const authenticate = require('../middleware/assessmentMiddleware');
+
+const router = express.Router();
 
 router.post('/assessments', authenticate, assessmentController.createAssessment);
 router.get('/assessments/status', authenticate, assessmentController.getAssessmentStatus);
