@@ -1,10 +1,28 @@
 'use strict';
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  const Assessment = sequelize.define('Assessment', {
+  class Assessment extends Model {
+    static associate(models) {
+      // Association to Question
+      Assessment.hasMany(models.Question, { 
+        foreignKey: 'assessmentId', 
+        as: 'questions' 
+      });
+
+      // Association to User
+      Assessment.belongsTo(models.User, { 
+        foreignKey: 'userId', 
+        as: 'user' 
+      });
+    }
+  }
+
+  Assessment.init({
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
     },
     result: {
       type: DataTypes.INTEGER,
@@ -14,28 +32,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BIGINT,
       allowNull: false,
       references: {
-        model: 'users', 
-        key: 'id',
+        model: 'users',
+        key: 'id'
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
-    },
+    }
+  }, {
+    sequelize,
+    modelName: 'Assessment',
+    tableName: 'assessments',
+    timestamps: true,
   });
-
-  Assessment.associate = function(models) {
-    // Association to Question
-    Assessment.hasMany(models.Question, {
-      foreignKey: 'assessmentId', // Corrected foreign key to match the Question model
-      as: 'questions',
-    });
-
-    // Optionally, if there's a User model:
-    // Association to User
-    Assessment.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'user',
-    });
-  };
 
   return Assessment;
 };
