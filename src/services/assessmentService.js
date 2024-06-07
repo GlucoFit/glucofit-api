@@ -1,14 +1,14 @@
-const { User, Assessment, Question, sequelize } = require('../models');
+const { /*User,*/ Assessment, Question, sequelize } = require('../models');
 const user = require('../models/user');
 
 //debug log
-console.log('User model:', User);
-console.log('Assessment model:', Assessment);
-console.log('Question model:', Question);
+// console.log('User model:', User);
+// console.log('Assessment model:', Assessment);
+// console.log('Question model:', Question);
 
-if (!User) {
-    throw new Error('User model not found!');
-}
+// if (!User) {
+//     throw new Error('User model not found!');
+// }
 
 const createAssessment = async (answers, userId) => {
     const transaction = await sequelize.transaction();
@@ -21,29 +21,27 @@ const createAssessment = async (answers, userId) => {
 
         const assessmentId = newAssessment.id;
 
-        // Loop through question numbers (q1 to q14)
-        for (let i = 1; i <= 14; i++) {
-            const questionKey = 'q' + i;
-            const answer = answers[questionKey];
-
+        // Create question entries for the assessment
+        for (const [questionKey, answer] of Object.entries(answers)) {
             if (typeof answer === 'undefined') {
-                await transaction.rollback();
                 throw new Error(`Answer for ${questionKey} is required`);
             }
 
-            // Create question entry for the assessment
             await Question.create({
                 questionAnswer: answer,
                 assessmentId,
-                questionId: i, // Use the iteration index as the question ID
+                questionId: questionKey, // Use the question key as the question ID
             }, { transaction });
         }
 
+        // Commit the transaction if all operations succeed
         await transaction.commit();
-
         return newAssessment;
+
     } catch (error) {
+        // Rollback the transaction in case of any error
         await transaction.rollback();
+        console.error('Transaction failed and was rolled back:', error);
         throw error;
     }
 };
