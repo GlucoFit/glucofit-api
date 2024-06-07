@@ -1,22 +1,28 @@
 const assessmentService = require('../services/assessmentService');
 
 const createAssessment = async (req, res) => {
-  const { question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14 } = req.body;
   const userId = req.user.id;
-
-  const answers = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14 ];
-
-  if (answers.length !== 14) {
-    return res.status(400).json({ error: 'Exactly 14 answers are required' });
-  }
+  const answers = req.body;
 
   try {
-    const newAssessment = await assessmentService.createAssessment(answers, userId);
-    res.status(201).json(newAssessment);
+      // Check if the user already has an assessment
+      const hasAssessment = await assessmentService.checkAssessmentStatus(userId);
+      if (hasAssessment) {
+          return res.status(400).json({ error: 'User already has an assessment' });
+      }
+
+      // Create the assessment
+      const newAssessment = await assessmentService.createAssessment(answers, userId);
+      res.status(201).json(newAssessment);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      if (error instanceof ValidationError) {
+          return res.status(400).json({ error: error.message });
+      } else {
+          return res.status(500).json({ error: 'Internal server error' });
+      }
   }
 };
+
 
 const getAssessmentStatus = async (req, res) => {
   const userId = req.user.id;

@@ -1,25 +1,59 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Food extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // define association here if needed
     }
   }
   Food.init({
-    name: DataTypes.STRING,
-    imageUrl: DataTypes.STRING,
-    description: DataTypes.TEXT
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    foodIds: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    recipeUri: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    recipeName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    calories: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    sugarContent: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    dietLabels: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ingredients: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    instructionUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'Food',
+    tableName: 'foods',
+    timestamps: true,
   });
   return Food;
 };

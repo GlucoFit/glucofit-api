@@ -9,10 +9,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Question.init({
-    questionId: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey:true
+    },
+    questionId: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     questionAnswer: {
       type: DataTypes.STRING,

@@ -1,34 +1,64 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Food', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('foods', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true,
+        allowNull: false
       },
-      name: {
-        type: Sequelize.STRING
+      foodIds: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      recipeUri: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      recipeName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      calories: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
+      sugarContent: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
+      dietLabels: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      ingredients: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      description: {
-        type: Sequelize.TEXT
+      instructionUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.fn('NOW')
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Food');
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('foods');
   }
 };

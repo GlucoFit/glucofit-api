@@ -1,4 +1,5 @@
 const { User, Assessment, Question, sequelize } = require('../models');
+const user = require('../models/user');
 
 //debug log
 console.log('User model:', User);
@@ -12,6 +13,7 @@ if (!User) {
 const createAssessment = async (answers, userId) => {
     const transaction = await sequelize.transaction();
     try {
+        // Create the assessment
         const newAssessment = await Assessment.create({
             result: 0, // Adjust the result value as needed
             userId,
@@ -19,13 +21,23 @@ const createAssessment = async (answers, userId) => {
 
         const assessmentId = newAssessment.id;
 
-        const answerEntries = answers.map((answer, index) => ({
-            questionAnswer: answer,
-            assessmentId,
-            questionId: index + 1, // Assuming questionId starts from 1 to 13
-        }));
+        // Loop through question numbers (q1 to q14)
+        for (let i = 1; i <= 14; i++) {
+            const questionKey = 'q' + i;
+            const answer = answers[questionKey];
 
-        await Question.bulkCreate(answerEntries, { transaction });
+            if (typeof answer === 'undefined') {
+                await transaction.rollback();
+                throw new Error(`Answer for ${questionKey} is required`);
+            }
+
+            // Create question entry for the assessment
+            await Question.create({
+                questionAnswer: answer,
+                assessmentId,
+                questionId: i, // Use the iteration index as the question ID
+            }, { transaction });
+        }
 
         await transaction.commit();
 
@@ -34,7 +46,8 @@ const createAssessment = async (answers, userId) => {
         await transaction.rollback();
         throw error;
     }
-}
+};
+
 
 const checkAssessmentStatus = async (userId) => {
     const assessment = await Assessment.findOne({ where: { userId } });

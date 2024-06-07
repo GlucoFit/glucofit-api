@@ -4,3 +4,6 @@ certs/
 config/image_recognition
 node_modules
 config/cbf*
+config/menu.csv
+config/user.csv
+config/domains.txt
