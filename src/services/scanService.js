@@ -1,7 +1,6 @@
 const {User, Scan, ScanDataset} = require('../models');
 const bucket = require('../../config/storage');
 const scan_dataset = require('../models/scan_dataset');
-const { data } = require('@tensorflow/tfjs');
 
 const uploadImage = (file, folder = 'user-image', userId) => {
     return new Promise((resolve, reject) => {

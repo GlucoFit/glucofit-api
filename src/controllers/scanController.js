@@ -1,4 +1,3 @@
-const { data } = require('@tensorflow/tfjs');
 const scanService = require('../services/scanService');
 
 const uploadImageAndSave = async (req, res) => {
