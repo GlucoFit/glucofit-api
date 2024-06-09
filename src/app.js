@@ -2,9 +2,10 @@ const express = require('express');
 const { sequelize } = require('./models/index');
 const userRoutes = require('./routes/userRoute');
 const authRoutes = require('./routes/authRoute');
-//const predictRoutes = require('./routes/predictRoute');
+const recommendationRoutes = require('./routes/recommendationRoute');
 const scanRoutes = require('./routes/scanRoute');
 const assessmentRoutes = require('./routes/assessmentRoute');
+// const foodRoutes = require('./routes/foodRoute');
 const passport = require('passport');
 const cors = require('cors');
 require('../config/passport'); // Ensure your Passport strategies are configured
@@ -28,9 +29,10 @@ app.use(passport.initialize());
 // Use routes
 app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
-//app.use('/api/predict', predictRoutes);
+app.use('/api', recommendationRoutes);
 app.use('/api', scanRoutes);
 app.use('/api', assessmentRoutes);
+// app.use('/api', foodRoutes);
 
 // Test database connection and sync models
 (async () => {

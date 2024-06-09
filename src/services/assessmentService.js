@@ -1,5 +1,6 @@
 const { /*User,*/ Assessment, Question, sequelize } = require('../models');
 const user = require('../models/user');
+require('dotenv').config();
 
 //debug log
 // console.log('User model:', User);
@@ -71,8 +72,32 @@ const getAssessmentResult = async (userId) => {
     return assessment;
 };
 
+const deleteAssessment = async (userId) => {
+    const transaction = await sequelize.transaction();
+    try {   
+        const assessment = await Assessment.findOne({ where: { userId } });
+        if (!assessment) {
+            throw new Error('No assessment found for this user');
+        }
+
+        // Delete related questions first
+        await Question.destroy({ where: { assessmentId: assessment.id }, transaction });
+
+        // Delete the assessment
+        await Assessment.destroy({ where: { id: assessment.id }, transaction });
+
+        // Commit the transaction
+        await transaction.commit();
+    } catch (error) {
+        // Rollback the transaction in case of any error
+        await transaction.rollback();
+        throw error;
+    }
+};
+
 module.exports = {
     createAssessment,
     checkAssessmentStatus,
     getAssessmentResult,
+    deleteAssessment,
 };

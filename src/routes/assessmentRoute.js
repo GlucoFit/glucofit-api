@@ -9,4 +9,7 @@ router.post('/assessments', authenticateJWT, assessmentController.createAssessme
 router.get('/assessments/status', authenticateJWT, assessmentController.getAssessmentStatus);
 router.get('/assessments/result', authenticateJWT, assessmentController.getAssessmentResult);
 
+//DEVELOPMENT ONLY
+router.delete('/assessments/me', authenticateJWT, assessmentController.deleteAssessment);
+
 module.exports = router;
