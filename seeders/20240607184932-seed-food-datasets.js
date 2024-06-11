@@ -16,7 +16,6 @@ module.exports = {
         .pipe(csv())
         .on('data', (row) => {
           rows.push({
-            foodIds: row['food_ids'],
             recipeUri: row['recipe_uri'],
             recipeName: row['recipe_name'],
             calories: parseFloat(row['calories']),

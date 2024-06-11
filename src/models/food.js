@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    foodIds: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     recipeUri: {
       type: DataTypes.STRING,
       allowNull: false,
