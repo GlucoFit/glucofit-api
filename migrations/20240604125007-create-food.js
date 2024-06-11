@@ -9,10 +9,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      foodIds: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       recipeUri: {
         type: Sequelize.STRING,
         allowNull: false
