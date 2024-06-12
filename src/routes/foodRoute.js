@@ -6,8 +6,7 @@ const authenticateJWT = require('../middleware/authenticateJWT');
 /**
  * API for Food
  */
+router.get('/food/:name', authenticateJWT, foodController.getFoodByRecipeName);
+// router.get('/food/:id(\\d+)', authenticateJWT, foodController.getFoodByFoodId);
 
-// text editor nya ngedit -> dia bakal manggil PreData -> kalau udah fix , pencet searc -> manggil FixData
-//getFoodbyFoodRecipeNamePreData
-//getFoodByFoodRecipeNameFixData -> parameter /food/:name -> controller : req.params.name -> dicocokin sama database food where : name
-//getFoodByFoodPrimaryKeyId -> /food/:id -> controller : req.params.id
+module.exports = router;
