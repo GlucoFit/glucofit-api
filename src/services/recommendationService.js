@@ -1,3 +1,4 @@
+const {Food} = require('../models');
 const assessmentService = require('./assessmentService');
 const axios = require('axios');
 require('dotenv').config();
@@ -16,7 +17,15 @@ const getRecommendationsByAssessment = async (userId) => {
         }
 
         const recommendations = await predictWebService(userFeatures);
-        return recommendations;
+
+        const recommendedFoods = await Promise.all(recommendations.map(async (recommendation) => {
+            const food = await Food.findOne({where: {recipeName: recommendation.recipe_name}});
+            return {
+                ...recommendation,
+                food_details: food
+            };
+        }));
+        return recommendedFoods;
     } catch (error) {
         console.error('Error fetching recommendations on assessment:', error);
         throw new Error('failed to fetch recommendations on assessment');   
@@ -28,6 +37,8 @@ const predictWebService = async (userFeatures) => {
         const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD, {
             user_features: userFeatures
         });
+
+
         return response.data;
     } catch (error) {
         console.error('Error fetching recommendations:', error);

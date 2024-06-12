@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Token, { foreignKey: 'userId', as: 'tokens'})
       User.hasMany(models.Scan, { foreignKey:'userId', as: 'scans' })
-      User.hasMany(models.Assessment, { foreignKey: 'userId', as: 'assessments' }); 
+      User.hasMany(models.Assessment, { foreignKey: 'userId', as: 'assessments' });
+      User.hasMany(models.Search, {foreignKey: 'userId', as: 'searches' });  
     }
   }
   User.init({

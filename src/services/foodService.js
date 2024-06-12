@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const {Food, Search} = require('../models');
 
-const getFoodByRecipeName = async (foodName) => {
+const getFoodByRecipeName = async (foodName, userId) => {
     const foods = await Food.findAll({
         where: {
             recipeName: {[Op.like]: `%${foodName}%`}
@@ -10,7 +10,7 @@ const getFoodByRecipeName = async (foodName) => {
     });
 
     const searchText = foodName;
-    await Search.create({searchText});
+    await Search.create({searchText, userId});
     
     return foods;
 }
