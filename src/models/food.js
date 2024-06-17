@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     }
+    // tambahin serving
   }, {
     sequelize,
     modelName: 'Food',

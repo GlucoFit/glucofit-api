@@ -95,6 +95,16 @@ const deleteAssessment = async (userId) => {
     }
 };
 
+// jangan lupa require('axios')
+
+//disini bikin fungsi request post ke model RSI
+// axios.post , link cloud runnya apa , {
+//  input datanya (yang weight dkk)
+// }
+
+// nanti dapet hasil gulanya (result recommendation sugar intake) -> simpen ke user yang ngisi assessment ini
+
+
 module.exports = {
     createAssessment,
     checkAssessmentStatus,

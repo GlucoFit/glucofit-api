@@ -46,6 +46,7 @@ module.exports = {
             ingredients: row['ingredients'],
             imageUrl: row['image_url'],
             instructionUrl: row['instruction_url']
+            // serving: row['serving']
           });
 
           if (rows.length === BATCH_SIZE) {

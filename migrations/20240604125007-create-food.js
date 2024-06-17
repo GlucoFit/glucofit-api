@@ -41,6 +41,7 @@ module.exports = {
         type: Sequelize.STRING(160), // max length 159, rounded to multiple of 5
         allowNull: false
       },
+      // tambahin serving
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
