@@ -34,7 +34,7 @@ const getRecommendationsByAssessment = async (userId) => {
 
 const predictWebService = async (userFeatures) => {
     try {
-        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL, {
+        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD, {
             user_features: userFeatures
         });
 

@@ -45,7 +45,8 @@ module.exports = {
             dietLabels: row['diet_labels'],
             ingredients: row['ingredients'],
             imageUrl: row['image_url'],
-            instructionUrl: row['instruction_url']
+            instructionUrl: row['instruction_url'],
+            servings: row['servings'] 
             // serving: row['serving']
           });
 

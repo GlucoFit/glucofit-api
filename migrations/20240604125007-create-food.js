@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false
       },
       recipeUri: {
-        type: Sequelize.STRING(85), // max length 83, rounded to multiple of 5
+        type: Sequelize.STRING(85),
         allowNull: false
       },
       recipeName: {
-        type: Sequelize.STRING(130), // max length 127, rounded to multiple of 5
+        type: Sequelize.STRING(130),
         allowNull: false
       },
       calories: {
@@ -26,22 +26,25 @@ module.exports = {
         allowNull: false
       },
       dietLabels: {
-        type: Sequelize.STRING(45), // max length 45, already multiple of 5
+        type: Sequelize.STRING(45),
         allowNull: false
       },
       ingredients: {
-        type: Sequelize.STRING(1480), // max length 1479, rounded to multiple of 5
+        type: Sequelize.STRING(1480),
         allowNull: false
       },
       imageUrl: {
-        type: Sequelize.STRING(355), // max length 355, already multiple of 5
+        type: Sequelize.STRING(355),
         allowNull: false
       },
       instructionUrl: {
-        type: Sequelize.STRING(160), // max length 159, rounded to multiple of 5
+        type: Sequelize.STRING(160),
         allowNull: false
       },
-      // tambahin serving
+      servings: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
