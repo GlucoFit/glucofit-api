@@ -11,6 +11,19 @@ const getSearchHistory = async (req, res) => {
     }
 }
 
+const deleteSearchHistoryById = async (req, res) => {
+    try {
+        const searchId = req.params.id
+        const userId = req.user.id
+
+        await searchService.deleteSearchHistoryById(searchId, userId)
+        res.status(200).json({message: "Success deleting search history"});
+    } catch (error) {
+        res.status(500).json({message: "Error fetching search history"});
+    }
+}
+
 module.exports = {
-    getSearchHistory
+    getSearchHistory,
+    deleteSearchHistoryById
 }

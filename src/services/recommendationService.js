@@ -16,7 +16,7 @@ const getRecommendationsByAssessment = async (userId) => {
             preferred_food: assessment.questions.find(q => q.questionId == 'foodLikes').questionAnswer
         }
 
-        const recommendations = await predictWebService(userFeatures);
+        const recommendations = await predictWebServiceMRS(userFeatures);
 
         const recommendedFoods = await Promise.all(recommendations.map(async (recommendation) => {
             const food = await Food.findOne({where: {recipeName: recommendation.recipe_name}});
@@ -32,9 +32,9 @@ const getRecommendationsByAssessment = async (userId) => {
     }
 }
 
-const predictWebService = async (userFeatures) => {
+const predictWebServiceMRS = async (userFeatures) => {
     try {
-        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD, {
+        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD_MRS, {
             user_features: userFeatures
         });
 

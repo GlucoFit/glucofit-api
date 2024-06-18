@@ -68,10 +68,24 @@ const deleteScanById = async (req, res) => {
     }
 }
 
+const analyzeImage = async (req,res) => {
+    try {
+        const file = req.file
+        if (!file) {
+            return res.status(400).json({ error: 'No file uploaded.' });
+        }
+        const data = await scanService.analyzeImage(file)
+        res.status(200).json({data: data})
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
+
 module.exports = {
     uploadImageAndSave,
     getHistoryMe,
     getSugarByDatasetId,
     getSugarByDatasetLabel,
-    deleteScanById
+    deleteScanById,
+    analyzeImage
 }

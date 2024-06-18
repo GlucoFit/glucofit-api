@@ -1,5 +1,7 @@
 const {User, Scan, ScanDataset} = require('../models');
 const bucket = require('../../config/storage');
+const axios = require('axios')
+const FormData = require('form-data')
 
 const uploadImage = (file, folder = 'user-image', userId) => {
     return new Promise((resolve, reject) => {
@@ -88,11 +90,32 @@ const deleteScanById = async (scanHistoryId) => {
     return scan.destroy();
 }
 
+const analyzeImage = async (file) => {
+    try {
+        const formData = new FormData();
+        
+        // Append the image file to the form data as a buffer
+        formData.append('image', file.buffer, file.originalname);
+
+        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD_IR, formData, {
+            headers: {
+                ...formData.getHeaders()
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        throw new Error('Failed to fetch recommendations');
+    }
+};
+
 module.exports = {
     uploadImage,
     saveImage,
     getHistoryMe,
     getSugarByDatasetId,
     getSugarByDatasetLabel,
-    deleteScanById
+    deleteScanById,
+    analyzeImage
 };

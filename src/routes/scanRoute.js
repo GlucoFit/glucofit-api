@@ -9,7 +9,9 @@ const upload = require('../middleware/uploadMiddleware');
  */
 router.get('/scan/id/:id(\\d+)', authenticateJWT, scanController.getSugarByDatasetId);
 router.get('/scan/label/:label', authenticateJWT, scanController.getSugarByDatasetLabel);
+//get (/scan/dataset)
 
+router.post('/scan/analyze', authenticateJWT, upload.single('image'), scanController.analyzeImage);
 router.post('/scan/upload', authenticateJWT, upload.single('image'), scanController.uploadImageAndSave);
 router.get('/scan/history', authenticateJWT, scanController.getHistoryMe);
 router.delete('/scan/history/:id(\\d+)', authenticateJWT, scanController.deleteScanById);
