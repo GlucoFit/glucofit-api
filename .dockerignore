@@ -1,0 +1,7 @@
+.env
+.gitignore
+config/serviceAccountKey.json
+config/user.csv
+certs/
+node_modules/
+test/

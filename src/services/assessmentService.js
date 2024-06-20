@@ -1,5 +1,5 @@
 const { /*User,*/ Assessment, Question, sequelize } = require('../models');
-const user = require('../models/user');
+const axios = require('axios')
 require('dotenv').config();
 
 //debug log
@@ -14,9 +14,21 @@ require('dotenv').config();
 const createAssessment = async (answers, userId) => {
     const transaction = await sequelize.transaction();
     try {
-        // Create the assessment
+        // Prepare the RSI data from answers
+        const rsiData = {
+            age: new Date().getFullYear() - new Date(answers.dob).getFullYear(), // Calculate age from dob
+            height: parseInt(answers.height),
+            weight: parseInt(answers.weight),
+            diabetes_history: answers.historyOfDiabetes,
+            diabetes_heritage: answers.familyHistoryOfDiabetes
+        };
+
+        // Predict the recommended sugar intake
+        const prediction = await predictWebServiceRSI(rsiData);
+
+        // Create the assessment with the prediction result
         const newAssessment = await Assessment.create({
-            result: 0, // Adjust the result value as needed
+            result: prediction.predicted_sugar_intake, // Use the prediction result
             userId,
         }, { transaction });
 
@@ -46,7 +58,6 @@ const createAssessment = async (answers, userId) => {
         throw error;
     }
 };
-
 
 const checkAssessmentStatus = async (userId) => {
     const assessment = await Assessment.findOne({ where: { userId } });
@@ -95,6 +106,16 @@ const deleteAssessment = async (userId) => {
     }
 };
 
+
+const predictWebServiceRSI = async (answers) => {
+    try {
+        const response = await axios.post(process.env.WEBSERVICE_PREDICT_URL_PROD_RSI, answers);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        throw new Error('failed to fetch recommendations');
+    }
+}
 // jangan lupa require('axios')
 
 //disini bikin fungsi request post ke model RSI
