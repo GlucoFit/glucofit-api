@@ -25,12 +25,14 @@ const createAssessment = async (answers, userId) => {
 
         // Predict the recommended sugar intake
         const prediction = await predictWebServiceRSI(rsiData);
+        // console.log("prediction result" + prediction)
 
         // Create the assessment with the prediction result
         const newAssessment = await Assessment.create({
             result: prediction.predicted_sugar_intake, // Use the prediction result
             userId,
         }, { transaction });
+        // console.log("new asssessment created" + newAssessment)
 
         const assessmentId = newAssessment.id;
 
@@ -45,6 +47,7 @@ const createAssessment = async (answers, userId) => {
                 assessmentId,
                 questionId: questionKey, // Use the question key as the question ID
             }, { transaction });
+            // console.log("creating question on table for field:" + questionKey)
         }
 
         // Commit the transaction if all operations succeed

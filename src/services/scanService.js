@@ -4,22 +4,37 @@ const axios = require('axios')
 const FormData = require('form-data')
 
 const uploadImage = (file, folder = 'user-image', userId) => {
+    // console.log("Test 1 inside upload service");
     return new Promise((resolve, reject) => {
+        // console.log("Test 2 inside upload service");
+        // console.log(file); // Log the entire file object
+        // console.log(file.buffer); // Log the file buffer
+        
         const blob = bucket.file(`${folder}/${Date.now()}_${userId}_${file.originalname}`);
         const blobStream = blob.createWriteStream({
             resumable: false
         });
-
+        
+        // console.log("Test 3 inside upload service");
+        
         blobStream.on('error', (err) => {
             reject(err);
+            console.log("Test 3 :" + err.message);
         });
-
+        
+        // console.log("Test 4 inside upload service");
+        
         blobStream.on('finish', () => {
             const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
             resolve(publicUrl);
+            // console.log("Test 5 :" + publicUrl);
         });
-
+        
+        // console.log("Test 5 inside upload service");
+        
         blobStream.end(file.buffer);
+        
+        // console.log("Test 6 inside upload service");
     });
 }
 

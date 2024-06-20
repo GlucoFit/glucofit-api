@@ -7,7 +7,8 @@ const uploadImageAndSave = async (req, res) => {
         }
         
         console.log(req.body);
-        
+        console.log(req.file);
+
         const userId = req.user.id;
         const { objectName } = req.body;
         const { objectSugar } = req.body;
@@ -16,7 +17,7 @@ const uploadImageAndSave = async (req, res) => {
         if (!objectName) {
             return res.status(400).json({ error: 'Object name and object sugar are required.' });
         }
-        
+        // console.log('controller: saving image from controller king');
         const objectImageUrl = await scanService.uploadImage(req.file, 'user-image', userId);
         // console.log('controller: saving image from controller king');
         //========CHANGE THIS OBJECT SUGAR TO PREDICT FUNCTION LATER
