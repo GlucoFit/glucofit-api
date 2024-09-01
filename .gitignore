@@ -1,3 +1,6 @@
 node_modules/
 .env
 src/config/serviceAccountKey.json
+config/user.csv
+config/serviceAccountKey.json
+certs/*
